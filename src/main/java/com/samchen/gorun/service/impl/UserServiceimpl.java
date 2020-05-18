@@ -20,6 +20,11 @@ public class UserServiceimpl implements UserService {
     }
 
     @Override
+    public int addUser(User user) {
+        return userMapper.addUser(user);
+    }
+
+    @Override
     public List<User> findByName(String name) {
         return userMapper.findByName(name);
     }
