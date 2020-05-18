@@ -25,24 +25,20 @@ public class UserController {
     @RequestMapping("/addUser")
     @ResponseBody
     public String addUser() {
-        ExecutorService service = new ThreadPoolExecutor(5, 10, 200,
+        ExecutorService service = new ThreadPoolExecutor(5, 20, 200,
                 TimeUnit.SECONDS, new ArrayBlockingQueue(10), Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
-
-        int count = 200000 - 120775;
+        int count = 200;
         CountDownLatch latch = new CountDownLatch(count);
-        for (int i = 120775; i <= 200000; i++) {
+        for (int i = 1000001; i <= 1000200; i++) {
             User user = new User();
             String[] usernames = {"柳岩", "苍老师", "Angelababy", "热巴", "周冬雨", "周芷若", "王语嫣"};
             int index = i % 7;
             user.setUsername(usernames[index] + i);
             user.setPassword(UUID.randomUUID().toString().replace("-", ""));
-
-
             service.execute(() -> {
                userService.addUser(user);
             });
             latch.countDown();
-//            userService.addUser(user);
         }
 
         try {
